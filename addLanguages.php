@@ -3,24 +3,48 @@
 require_once 'bdd/pdo.php';
 
 // Create connection  - Gestion de langues (Liste, Ajout, Modification, Suppression)
-$conn = new mysqli($dsn, $dbUser, $dbPassword, $dbname);
+// $conn = new mysqli($dsn, $dbUser, $dbPassword, $dbname);
 // Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+// if ($conn->connect_error) {
+//   die("Connection failed: " . $conn->connect_error);
+// }
+// $langId = "1";
+// $langCode = "En";
+// $langName = "English";
 
-$sql = "INSERT INTO languages(languageCode, languageName)
+// $langId = "2";
+// $langCode = "Fr";
+// $langName = "French";
+
+// $langId = "3";
+// $langCode = "Zh";
+// $langName = "Chinese";
+
+$langId = "5";
+$langCode = "En";
+$langName = "English";
+// in order to verify if there is an douplicate
+$result = $pdo->prepare("SELECT * FROM languages WHERE languageName= :langName");
+$count = $result->execute([
+  'langName'=>$langName]);
+var_dump($count);
+if($count==0){
+  $stmt = $pdo->prepare("INSERT INTO languages (languageId, languageCode, languageName)
 VALUES 
-('En','English'),
-('Fr','French'),
-('Zh','Chinese'),
-('De','Germany')";
+(:languageId,:languageCode,:languageName)");
 
-if ($conn->query($sql) === TRUE) {
+$stmt->bindParam(":languageId",$langId);
+$stmt->bindParam(":languageCode",$langCode);
+$stmt->bindParam(":languageName",$langName);
+if ($stmt->execute()) {
   echo "New record created successfully";
-} else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
+} else{
+  echo "Unable to create record";
+}
+}else{
+  echo "The languages already exists"
+}
 }
 
-$conn->close();
+
 ?>
