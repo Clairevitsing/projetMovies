@@ -4,6 +4,9 @@ require_once  'layout/navbar.php';
 
 
 ?>
+<div class="welcome">
+    <p>Hello <?php echo $_GET['name']?> </p> 
+</div>
 
 <div>
     <h1>Welcome to the multilingual movie site</h1>

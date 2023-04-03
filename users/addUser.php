@@ -1,6 +1,8 @@
 <!--将用户注册的信息写入数据库-->
 <?php
-require_once 'bdd/pdo.php';
+require_once __DIR__. '/../bdd/pdo.php';
+require_once __DIR__ .'/../layout/header.php';
+require_once __DIR__ .'/../layout/navbar.php';
 
 $first =  $_POST['first'];
 $last =  $_POST['last'];
